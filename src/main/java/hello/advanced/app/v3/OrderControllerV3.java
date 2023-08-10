@@ -21,11 +21,11 @@ public class OrderControllerV3 {
 			status = trace.begin("OrderControllerV2.request()");
 			orderService.orderItem(itemId);
 			trace.end(status);
+			return "ok";
 		} catch (Exception e) {
 			trace.exception(status, e);
 			throw e;	// 예외를 꼭 다시 던져줘야한다.
 		}
 		
-		return "ok";
 	}
 }
