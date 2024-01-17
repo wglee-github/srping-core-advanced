@@ -14,6 +14,6 @@ public class OrderControllerV0 {
 	@GetMapping("/v0/request")
 	public String request(String itemId) {
 		orderService.orderItem(itemId);
-		return "o,k";
+		return "ok";
 	}
 }

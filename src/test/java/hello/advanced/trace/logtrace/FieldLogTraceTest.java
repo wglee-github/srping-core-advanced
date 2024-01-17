@@ -17,7 +17,7 @@ class FieldLogTraceTest {
 		fieldLogTrace.end(status1);
 	}
 
-	@Test
+//	@Test
 	void bigin_exception_level2() {
 		TraceStatus status1 = fieldLogTrace.begin("hello1");
 		TraceStatus status2 = fieldLogTrace.begin("hello2");

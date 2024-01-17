@@ -21,6 +21,12 @@ public class HelloTraceV2 {
 		return new TraceStatus(traceId, startTimeMs, message);
 	}
 	
+	/**
+	 * 서비스를 이동할 때 기존 ID값을 유지해주고 ID값을 증가해준다.
+	 * @param beforeTraceId
+	 * @param message
+	 * @return
+	 */
 	public TraceStatus beginSync(TraceId beforeTraceId, String message) {
 		TraceId nextId = beforeTraceId.createNextId();
 		Long startTimeMs = System.currentTimeMillis();
