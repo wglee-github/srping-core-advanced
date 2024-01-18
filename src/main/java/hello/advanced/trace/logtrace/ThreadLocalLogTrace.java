@@ -12,7 +12,7 @@ public class ThreadLocalLogTrace implements LogTrace{
 	private static final String EX_PREFIX = "<X-";
 	
 //	private TraceId traceIdHolder; // traceId 동기화, 동시성 이슈 발생
-	private ThreadLocal<TraceId> traceIdHolder = new ThreadLocal<>();
+	private ThreadLocal<TraceId> traceIdHolder = new ThreadLocal<>();	// 동시성 이슈 발생 안함.
 	
 	@Override
 	public TraceStatus begin(String message) {
@@ -55,6 +55,15 @@ public class ThreadLocalLogTrace implements LogTrace{
 		releaseTraceId();
 	}
 
+	/**
+	 * ThreadLocal 사용 시 주의 사항
+	 * Http로 [A]요청이 들어온 경우 Was가 쓰레드풀에 1번 쓰레드를 할당해서 요청 처리를 진행한다. 이때  1번 쓰레드의 ThreadLocal 전용 방이 생성된다. 
+	 * 이후 Http [B]요청이 들어오면 Was가 쓰레드풀에서 2번 쓰레드를 할당해서 요청 처리를 진행한다. 이때 2번 쓰레드의 ThreadLocal 전용 방이 생성된다.
+	 * 자 그런데 [A] 요청 처리가 완료가 되면 Was는 사용했던 쓰레드를 다시 쓰레드 풀에 반환하게 되는데 이때 1번 쓰레드가 사용한 ThreadLocal를 제거해주지 않으면 정보가 사라지지 않는다.
+	 * Was가 쓰레드 풀에 사용했던 쓰레드를 반환하는 이유는 쓰레드 생성 비용이 비싸기 때문에 재사용하기 위해서다. 따라서 살아있는 쓰레드라는 말이다. 
+	 * 꼭 ThreadLocal를 사용하는 경우 요청이 완료되면 remove()를 해주자. 
+	 * 
+	 */
 	private void releaseTraceId() {
 		TraceId traceId = traceIdHolder.get();
 		if(traceId.isFirstLevel()) {

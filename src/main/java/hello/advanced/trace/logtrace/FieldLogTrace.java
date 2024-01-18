@@ -12,8 +12,8 @@ public class FieldLogTrace implements LogTrace{
 	private static final String EX_PREFIX = "<X-";
 	
 	/**
-	 * 서비스간 ID를 공유하기 위해서 파라미터를 넘기지 않고 ID를 공유하기 위해 FieldLogTrace 클래스 안에 보관하기위해 선언.
-	 * FieldLogTrace 클래스가 스프링 빈으로 등록되면 싱글톤으로 적용되기 때문에 해당 필드는 모든 애플리케이션에서 동일한 값을 공유하게 된다.
+	 * 서비스간 ID를 공유하고자 할 때 파라미터를 넘기는 방식 말고 FieldLogTrace 클래스내에있는 필드에 보관하기 위해 선언.
+	 * FieldLogTrace 클래스가 스프링 빈으로 등록되면 싱글톤으로 등록되기 때문에 해당 필드는 애플리케이션내에서 동일한 값을 공유하게 된다.
 	 * 이럴경우 동시성 이슈 발생한다.
 	 * 따라서 http 요청별 따라 traceIdHolder 값이 변경되기를 원한다면 싱글톤스코프가 아닌 request 스코프를 사용하거나, 특정 시점에 null로 초기화 해주어야 한다.
 	 * 하지만, 특정 시점에 null로 초기화 해준다고 하더라도 http 요청이 null 해주는 시점보다 요청이 빠른 경우 동시성 이슈는 여전히 존재한다. 예) 1초에 두번 호출 등

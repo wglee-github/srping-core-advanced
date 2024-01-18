@@ -29,8 +29,8 @@ public class FieldServiceTest {
 		threadB.setName("thread-B");
 		
 		threadA.start();
-//		sleep(2000);	// 동시성 문제 발생안함.
-		sleep(100);	// 동시성 문제 발생함.
+		sleep(2000);	// 동시성 문제 발생안함.
+//		sleep(100);	// 동시성 문제 발생함.
 		threadB.start();
 		sleep(2000);
 		
