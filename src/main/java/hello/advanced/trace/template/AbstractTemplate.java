@@ -16,7 +16,9 @@ public abstract class AbstractTemplate<T> {
 		try {
 			status = trace.begin(message);
 			
-			// 로직 실행
+			/**
+			 *  로직 실행 call 메서드에서 리턴을 받으면 된다.
+			 */
 			T result = call();
 			trace.end(status);
 			return result;

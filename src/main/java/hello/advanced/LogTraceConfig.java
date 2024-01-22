@@ -16,7 +16,7 @@ public class LogTraceConfig {
 	@Bean
 	public LogTrace logTrace() {
 		log.info("logTrace bean 등록");
-		return new FieldLogTrace();
-//		return new ThreadLocalLogTrace();
+//		return new FieldLogTrace();
+		return new ThreadLocalLogTrace();
 	}
 }
