@@ -30,7 +30,6 @@ import lombok.RequiredArgsConstructor;
  * - 변경이 일어날 때 자연스럽게 드러난다.
  * - 로그는 남기는 부분을 모듈화 하고, 비즈니스 부분을 분리했다. 
  *   만약 로그 남기는 부분을 변경해야 한다고 했을 때 AbstractTemplate 부분만 수정해주면 된다.
- * @author wglee
  *
  */
 @RestController
@@ -40,6 +39,11 @@ public class OrderControllerV4 {
 	private final OrderServiceV4 orderService;
 	private final LogTrace trace;
 	
+	/**
+	 * 템플릿 메서드 패턴 적용
+	 * @param itemId
+	 * @return
+	 */
 	@GetMapping("/v4/request")
 	public String request(String itemId) {
 		// 단일 책임 원칙(SRP)을 지키는 구조
